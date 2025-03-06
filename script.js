@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const todoInput = document.querySelector(".todoGiriniz"); // Kullanıcının girdiği metni alır
-    const todoButton = document.querySelector(".todoEkle"); // Todo ekleme butonu
-    const todoListContainer = document.querySelector(".section2"); // Yeni todo'ları buraya ekleyeceğiz
-    const hrElement = document.querySelector(".hr"); // <hr> elementi
-    const clearButton = document.querySelector(".todoTemizle"); // Tümünü temizleme butonu
+    const todoInput = document.querySelector(".todoGiriniz");
+    const todoButton = document.querySelector(".todoEkle");
+    const todoListContainer = document.querySelector(".section2");
+    const clearButton = document.querySelector(".todoTemizle");
 
-    todoButton.addEventListener("click", function () {
-        const todoText = todoInput.value.trim(); // Kullanıcının girdiği metni al
+    function loadTodos() {
+        const savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+        savedTodos.forEach(todoText => addTodoToDOM(todoText));
+    }
 
-        if (todoText === "") return; // Boş girişleri engelle
-
+    function addTodoToDOM(todoText) {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todoItem");
 
@@ -18,23 +18,43 @@ document.addEventListener("DOMContentLoaded", function () {
         todoP.textContent = todoText;
 
         const deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "&times;"; // Çarpı işareti
+        deleteButton.innerHTML = "&times;";
         deleteButton.classList.add("deleteTodo");
 
         deleteButton.addEventListener("click", function () {
             todoDiv.remove();
+            removeFromLocalStorage(todoText);
         });
 
         todoDiv.appendChild(todoP);
         todoDiv.appendChild(deleteButton);
 
         todoListContainer.insertBefore(todoDiv, clearButton);
+    }
 
-        todoInput.value = "";
+    function removeFromLocalStorage(todoText) {
+        let savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+        savedTodos = savedTodos.filter(todo => todo !== todoText);
+        localStorage.setItem("todos", JSON.stringify(savedTodos));
+    }
+
+    todoButton.addEventListener("click", function () {
+        const todoText = todoInput.value.trim();
+        if (todoText === "") return;
+
+        addTodoToDOM(todoText); 
+
+        let savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+        savedTodos.push(todoText);
+        localStorage.setItem("todos", JSON.stringify(savedTodos));
+
+        todoInput.value = ""; 
     });
 
     clearButton.addEventListener("click", function () {
         document.querySelectorAll(".todoItem").forEach(todo => todo.remove());
+        localStorage.removeItem("todos"); 
     });
-});
 
+    loadTodos();
+});
