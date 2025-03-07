@@ -26,11 +26,17 @@ margin-top: 0px;
     font-weight: bold;
     margin: 0px 0px 20px 5px;
 }
-.todoGiriniz{
+.todoAra,.todoGiriniz{
     width: 90%;
     margin: 15px 10px;
 }
-.todoEkle{
+
+.todoGiriniz:focus,.todoAra:focus {
+    box-shadow: 0 0 8px rgba(34, 174, 234, 0.6);  
+    outline: none; 
+}
+
+.todoEkle,.todoTemizle{
     margin-left: 10px;
     margin-bottom: 20px;
     background-color: rgb(23, 195, 221);
@@ -41,7 +47,7 @@ margin-top: 0px;
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
 
 }
-.todoEkle:hover{
+.todoEkle:hover,.todoTemizle:hover{
     background-color: aliceblue;
     color: rgb(23, 195, 221);
     border: 1px solid rgb(23, 195, 221);
@@ -49,40 +55,14 @@ margin-top: 0px;
     box-sizing: border-box;
 
 }
-.todoGiriniz:focus {
-    box-shadow: 0 0 8px rgba(34, 174, 234, 0.6);  
-    outline: none; 
-}
+
 
 .todoBaslik2{
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
     margin: 10px 0px 10px 10px;
 }
-.todoAra{
-    width: 90%;
-    margin: 15px 10px;
-}
-.todoAra:focus {
-    box-shadow: 0 0 8px rgba(34, 174, 234, 0.6); 
-    outline: none; 
-}
-.todoTemizle{
-    margin-left: 10px;
-    margin-bottom: 20px;
-    background-color: rgb(23, 195, 221);
-    color: aliceblue;
-    border: none;
-    border-radius: 2px;
-    padding: 6px 7px;
-}
-.todoTemizle:hover{
-    background-color: aliceblue;
-    color: rgb(23, 195, 221);
-    border: 1px solid rgb(23, 195, 221);
-    margin-bottom: 18.4px ;
-    box-sizing: border-box;
-}
+
 .hr{
     width: 95%;
     color: #8d8c8c;
@@ -110,27 +90,68 @@ margin-top: 0px;
     margin: 0;
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Metin alanının esnemesini sağlar */
-    white-space: nowrap; /* Metnin taşmasını önlemek için */
+    flex-grow: 1; 
+    white-space: nowrap; 
     overflow: hidden;
-    text-overflow: ellipsis; /* Çok uzun metinlerde "..." ekler */
+    text-overflow: ellipsis; 
 }
 
 .deleteTodo {
-    background-color: white;
+    background-color: transparent;
     border: none;
     font-size: 1.3rem;
     color: rgb(23, 195, 221);
-    cursor: pointer; /* Buton gibi gözükmesi için */
+    cursor: pointer; 
     display: flex;
     justify-content: center;
     align-items: center;
     height: 20px;
-    width: 25px; /* Çarpı işaretinin boyutunu belirle */
+    width: 25px; 
     margin-right: 5px;
     padding: 0;
 }
 
 .deleteTodo:hover {
-    color: darkred; /* Üzerine gelince kırmızı olsun */
+    color: darkred; 
+}
+
+.alert1{
+    width: 90%;
+    margin: 15px 10px;
+    background-color: tomato;
+    border-radius: 3px;
+    display: flex;
+    height: 25px;
+    padding: 5px 10px;
+    align-items: center;
+    flex-grow: 1; 
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.alert2{
+    width: 90%;
+    margin: 15px 10px;
+    background-color: forestgreen;
+    border-radius: 3px;
+    display: flex;
+    height: 25px;
+    padding: 5px 10px;
+    align-items: center;
+    flex-grow: 1; 
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.alertP{
+    padding-left: 10px;
+    height: 20px;
+    width: 85%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-grow: 1; 
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
