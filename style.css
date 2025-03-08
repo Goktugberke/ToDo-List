@@ -115,7 +115,7 @@ margin-top: 0px;
     color: darkred; 
 }
 
-.alert1{
+.warning{
     width: 90%;
     margin: 15px 10px;
     background-color: tomato;
@@ -129,7 +129,7 @@ margin-top: 0px;
     overflow: hidden;
     text-overflow: ellipsis; 
 }
-.alert2{
+.success{
     width: 90%;
     margin: 15px 10px;
     background-color: forestgreen;

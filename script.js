@@ -22,11 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
         clearTodos: () => localStorage.removeItem("todos")
     };
 
-    function insertAfter(newElement, referenceElement) {
-        referenceElement.parentNode.insertBefore(newElement, referenceElement.nextSibling);
-    }
-
-
     function createButton(text = "&times;", className = "deleteTodo") {
         const button = document.createElement("button");
         button.innerHTML = text;
@@ -58,14 +53,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayWarning(alertType, message, referenceElement, direction) {
-        const existingAlert = document.querySelector(".alert1");
-        if (alertType === "alert1" && existingAlert) return;
+        const existingAlert = document.querySelector(".warning");
+        if (alertType === "warning" && existingAlert) return;
 
         const alertBox = document.createElement("div");
-        if (alertType === "alert1") {
-            alertBox.classList.add("alert1");
-        } else if (alertType === "alert2") {
-            alertBox.classList.add("alert2");
+        if (alertType === "warning") {
+            alertBox.classList.add("warning");
+        } else if (alertType === "success") {
+            alertBox.classList.add("success");
         }
 
 
@@ -95,35 +90,55 @@ document.addEventListener("DOMContentLoaded", function () {
             addTodoToDOM(todoElement);
         });
     }
+    
+    function filterTodos(searchText){
+        document.querySelectorAll(".todoItem").forEach(todo => todo.remove());
+        StorageService.getTodos().forEach(todoText => {
+            if(todoText.toLowerCase().trim().includes(searchText)){
+               
+                const todoElement = createTodoElement(todoText);
+                addTodoToDOM(todoElement);
+            }
+            })
+            const number =document.querySelectorAll(".todoItem");
+                if(number.length==0){
+                    loadTodos();
+                   displayWarning("warning","Aradığınız todo bulunamamıştır.",hr,"before");
+                }
+
+    }
 
     todoButton.addEventListener("click", function () {
         const todoText = todoInput.value.trim();
         if (!todoText) {
-            displayWarning("alert1", "Lütfen bir Todo giriniz!", todoButton, "before");
+            displayWarning("warning", "Lütfen bir Todo giriniz!", todoButton, "before");
             return;
         }
 
         const todoElement = createTodoElement(todoText);
         addTodoToDOM(todoElement);
-        displayWarning("alert2", "Ürün başarıyla kaydedilmiştir", todoButton, "after");
+        displayWarning("success", "Ürün başarıyla kaydedilmiştir", todoButton, "after");
         StorageService.saveTodo(todoText);
         todoInput.value = "";
     });
 
-    todoSearchInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            const searchText = todoSearchInput.value.trim();
+    todoSearchInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            const searchText = todoSearchInput.value.toLowerCase().trim();
             if (!searchText) {
-                displayWarning("Lütfen bir metin giriniz!", todoSearchInput);
+                displayWarning("warning","Lütfen bir metin giriniz!", todoSearchInput,"after");
                 todoInput.value = "";
+                return;
             }
+            filterTodos(searchText);
+            todoSearchInput.value = "";
         }
     });
 
     clearButton.addEventListener("click", function () {
         document.querySelectorAll(".todoItem").forEach(todo => todo.remove());
         StorageService.clearTodos();
-        displayWarning("alert2", "Tüm ürünler temizlenmiştir", clearButton, "after");
+        displayWarning("success", "Tüm ürünler temizlenmiştir", clearButton, "after");
     });
 
     loadTodos();
